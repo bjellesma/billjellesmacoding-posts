@@ -1,6 +1,6 @@
 A couple of days ago, I found myself in a position where I upload some C# classes to production. These C# sharp classes all reference a centralized library that I use. In order so that I don't need to rebuild every single file when I change one method on the library, I use different versions of the library. The problem is that I forget the version of the library that I'm referencing whenever I make changes to the C# class. 
 
-![Uh Oh(https://img.thedailybeast.com/image/upload/c_crop,d_placeholder_euli9k,h_1440,w_2560,x_0,y_0/dpr_1.5/c_limit,w_1044/fl_lossy,q_auto/v1513982397/171220-ryan-home-alone-tease_zntomw)
+![Uh Oh](https://img.thedailybeast.com/image/upload/c_crop,d_placeholder_euli9k,h_1440,w_2560,x_0,y_0/dpr_1.5/c_limit,w_1044/fl_lossy,q_auto/v1513982397/171220-ryan-home-alone-tease_zntomw)
 
 I wondered to myself if you'd be able to tell the version of my library being referenced from the DLL. It makes sense because you still need the library DLL even after the C# class is compiled. Is this actually possible? Is this reverse engineering? Will I go to jail? To my great elation, I found that this definetly is possible using the [reflections](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/reflection) library. 
 
