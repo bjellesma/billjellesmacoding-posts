@@ -1,3 +1,5 @@
+# testß
+
 Remember blogging? You know, the thing that Barney Stinson did that everyone made fun of him for. Well, it's certainly made an impression on the tech community. Almost without fail, whenever I look up a topic about some modern JS framework or obscure python command, I'll come across a blog post that someone's written almost as much as I see comments on StackOverflow. Blogging is a great idea if you can devote a couple hours here and there. Blogging has tons of advantages:
 
 1. Blog about something that you've figured out so that it helps others. We've all been at the point where we're scouring the internet trying to figure out how to use those hot new ES6 modules. Pay it forward.
