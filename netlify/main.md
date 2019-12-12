@@ -83,18 +83,75 @@ I found that this POST was still leading to a 404 and, after scouring the [inter
     <label>Your Email: <input type="email" name="email" /></label>
   </p>
   <p>
-    <label>Your Role: <select name="role[]" multiple>
-      <option value="leader">Leader</option>
-      <option value="follower">Follower</option>
-    </select></label>
-  </p>
-  <p>
     <label>Message: <textarea name="message"></textarea></label>
   </p>
   <p>
     <button type="submit">Send</button>
   </p>
 </form>
+```
+
+# Spam Prevention
+
+Netlify has built in spam protection through an integration with [Akismet](). However, you're even able to take spam prevention a step further with a Recaptcha. The details of using a recaptcha in your forms is in the [documentation](https://docs.netlify.com/forms/spam-filters/#netlify-provided-recaptcha-2). One caveat is that Netlify's built in recaptcha [will not work with React Based websites](https://github.com/imorente/gatsby-netlify-form-example/issues/6). Fortunately, you're able to add a custom recaptcha. 
+
+1. You can sign up for a [free Google reCAPTCHA](http://www.google.com/recaptcha/admin). Once you have the site key and secret key, simply add these as environmental variables on your netlify dashboard. 
+
+![Environmental Variables](20191211_recaptcha_variables.png)
+
+2. Add a `data-netlify-recaptcha="true"` attribute to your form tag.
+
+The next steps are specific to using Gatsby
+
+3. Install the Gatsby plugin that use the reCAPTCHA javascript library and the react plugin to render the JSX with `npm install --save gatsby-plugin-recaptcha react-recaptcha
+
+4. Implement the Gatsby plugin in your `gatsby-config.js` file with the following:
+
+```js
+plugins: [
+    {
+      resolve: `gatsby-plugin-recaptcha`,
+      options: {
+         async: true,
+         defer: true,
+         args: `?onload=onloadCallback&render=explicit`,
+      },
+   },
+   ...
+````
+
+I did find that I needed the defer property as an error would cause my recaptcha to load twice.
+
+Your final form should now look like this inside of a react component
+
+```js
+import Recaptcha from 'react-recaptcha'
+
+const Page = () => (
+  
+    <div>
+      <form name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+        <input type="hidden" name="form-name" value="contact" />
+      <p>
+        <label>Your Name: <input type="text" name="name" /></label>   
+      </p>
+      <p>
+        <label>Your Email: <input type="email" name="email" /></label>
+      </p>
+      <p>
+        <label>Message: <textarea name="message"></textarea></label>
+      </p>
+      <Recaptcha sitekey="your_site_key" />
+      <p>
+        <button type="submit">Send</button>
+      </p>
+    </form>
+  </div>
+  </Layout>
+)
+
+export default Page
+
 ```
 
 Aside from the debugging, forms is a great feature that typically necessitates server side code and maybe a database. Netlify saw how useful form submissions are and decided to make that available for everyone!
